@@ -1,0 +1,101 @@
+<div class="container">
+  <div class="row">
+    <div class="col-3">
+      <div class="formdiv">
+        <form [formGroup]="userForm" (ngSubmit)="submitform()">
+          <div class="mt-4">
+            <label for="name">Name</label>
+            <input
+              type="text"
+              name="name"
+              formControlName="name"
+              required
+              class="form-control"
+            />
+          </div>
+          <div class="mt-4">
+            <label for="age">Age</label>
+            <select formControlName="age" required class="form-select">
+              <option value="">Select age</option>
+              <option *ngFor="let num of ages" [value]="num">{{ num }}</option>
+            </select>
+          </div>
+          <div class="mt-4">
+            <label for="gender">Gender</label><br />
+            <input
+              type="radio"
+              value="male"
+              formControlName="gender"
+              name="gender"
+              required
+            />
+            <label>Male</label>
+            <input
+              type="radio"
+              value="female"
+              formControlName="gender"
+              name="gender"
+            />
+            <label>Female</label>
+          </div>
+          <div class="mt-4">
+            <label for="gender">Hobby</label><br />
+            <div
+              formArrayName="hobbies"
+              *ngFor="let hobby of hobbies.controls; let i = index"
+            >
+              <input
+                type="text"
+                name="hobbies{{ i }}"
+                [formControlName]="i"
+                required
+                class=""
+              />
+              <input type="button" value="-" (click)="removehobby(i)" />
+            </div>
+            <input type="text" [formControl]="newHobbyControl" required />
+            <input type="button" (click)="addhobby()" value="+" />
+          </div>
+          <div class="mt-4">
+            <input
+              type="checkbox"
+              name="terms"
+              formControlName="terms"
+              required
+            />
+            <label for="terms">Terms</label>
+          </div>
+          <div class="mt-4">
+            <input class="button" type="submit" [disabled]="userForm.invalid" />
+            <input type="button" class="button" value="reset" />
+          </div>
+        </form>
+      </div>
+    </div>
+    <div class="col-6">
+      <div class="tablediv">
+        <input type="text" (input)="searchopt()" [(ngModel)]="searchQuery" />
+        <table border="1">
+          <tr>
+            <td>Name</td>
+            <td>Age</td>
+            <td>Gender</td>
+            <td>Hobby</td>
+            <td>Action</td>
+          </tr>
+          <tr *ngFor="let data of userrecords">
+            <td>{{ data.name }}</td>
+            <td>{{ data.age }}</td>
+            <td>{{ data.gender }}</td>
+            <td>
+              <span *ngFor="let hobby of data.hobbies">
+                {{ hobby }}
+              </span>
+            </td>
+            <td>delete</td>
+          </tr>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>

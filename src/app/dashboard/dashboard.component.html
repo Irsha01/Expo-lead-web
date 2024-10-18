@@ -1,1 +1,155 @@
 <p>dashboard works!</p>
+
+<!-- <div *ngFor="let da of data">
+  <p *ngFor="let color of da.c">result {{ color }}</p>
+</div> -->
+
+<div>Stopwatch {{ stopwatchvalue | date : "HH:mm:ss" : "UTC" }}</div>
+<div>
+  <button (click)="startwatch()">Start</button>
+  <button (click)="stopwatch()">Stop</button>
+  <button (click)="resetwatch()">Reset</button>
+</div>
+<div class="container">
+  <div class="row">
+    <div class="col-3">
+      <div class="formdiv bg-primary p-2">
+        <form #userForm="ngForm" (ngSubmit)="submitForm(userForm)">
+          <div>
+            <label for="name">Name:</label>
+            <input
+              type="text"
+              id="name"
+              class="form-control"
+              name="name"
+              [(ngModel)]="userData.name"
+              required
+            />
+          </div>
+          <div class="mt-4">
+            <label for="age">Age:</label>
+            <select
+              id="age"
+              name="age"
+              [(ngModel)]="userData.age"
+              class="form-select form-select-sm"
+              required
+            >
+              <option value="" disabled selected>Select Age</option>
+              <option *ngFor="let num of ageOptions" [value]="num">
+                {{ num }}
+              </option>
+            </select>
+          </div>
+          <div class="mt-4">
+            <label for="gender">Gender:</label><br />
+            <input
+              type="radio"
+              id="male"
+              name="gender"
+              value="male"
+              [(ngModel)]="userData.gender"
+              required
+            />
+            <label for="male" class="mx-2">Male</label>
+            <input
+              type="radio"
+              id="female"
+              name="gender"
+              value="female"
+              [(ngModel)]="userData.gender"
+            />
+            <label for="female" class="mx-2">Female</label>
+          </div>
+          <div mt-4>
+            <label>Hobbies:</label>
+            <div *ngFor="let hobby of userData.hobbies; let i = index">
+              <input
+                type="text"
+                name="hobbies{{ i }}"
+                [(ngModel)]="userData.hobbies[i]"
+                required
+              />
+              <button type="button" (click)="removeHobby(i)">-</button>
+            </div>
+            <input type="text" name="newHobby" [(ngModel)]="newHobby" />
+            <button type="button" (click)="addHobby()">+</button>
+          </div>
+
+          <div class="mt-4">
+            <input
+              type="checkbox"
+              id="terms"
+              name="terms"
+              [(ngModel)]="userData.terms"
+              required
+            />
+            <label for="terms" class="mx-2"
+              >I agree to the terms and conditions</label
+            >
+          </div>
+          <div class="mt-4">
+            <button type="submit" class="mx-3" [disabled]="!userForm.valid">
+              Submit
+            </button>
+            <button
+              type="button"
+              [disabled]="!userForm.valid"
+              (click)="reset(userForm)"
+            >
+              Reset
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <div class="col-9">
+      <div class="tablediv">
+        <div>
+          <input type="text" [(ngModel)]="searchQuery" (input)="search()" />
+        </div>
+        <table class="table table=stripped">
+          <thead>
+            <tr>
+              <td>Name</td>
+              <td>Age</td>
+              <td>Gender</td>
+              <td>Hobby</td>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let data of userRecords; let i = index">
+              <td>{{ data.name }}</td>
+              <td>{{ data.age }}</td>
+              <td>{{ data.gender }}</td>
+              <td>
+                <ng-container *ngFor="let hobby of data.hobbies">
+                  <span>{{ hobby }}</span
+                  ><br />
+                </ng-container>
+              </td>
+              <td>
+                <p (click)="deleterow(i)">delete</p>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="star-rating">
+  <ng-container *ngFor="let star of stars; let i = index">
+    <span class="star" [class.filled]="i < rating" (click)="rate(i + 1)">
+      &#9733;
+    </span>
+  </ng-container>
+  <div class="current-rating">Current rating: {{ rating }}</div>
+</div>
+
+<div *ngFor="let row of range(rows)">
+  <span *ngFor="let da of range(rows - row)">&nbsp;</span>
+  <span *ngFor="let da of range(row - 1)">*</span>
+</div>
